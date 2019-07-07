@@ -1,7 +1,5 @@
-import { format, parseISO } from 'date-fns';
-import pt from 'date-fns/locale/pt';
-
-import Mail from '../../lib/Mail';
+import SubscriptionMail from '../jobs/SubscriptionMail';
+import Queue from '../../lib/Queue';
 
 import Meetup from '../models/Meetup';
 import User from '../models/User';
@@ -73,15 +71,9 @@ class SubscriptionController {
 
       const user = await User.findByPk(req.userId);
 
-      await Mail.sendMail({
-        to: `${meetup.provider.name} <${meetup.provider.email}>`,
-        subject: 'Novo participante',
-        template: 'subscriptions',
-        context: {
-          provider: meetup.provider.name,
-          user: user.name,
-          meetup: meetup.title,
-        },
+      await Queue.add(SubscriptionMail.key, {
+        meetup,
+        user,
       });
 
       return res.send(subscription);
