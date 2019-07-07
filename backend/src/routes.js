@@ -24,6 +24,7 @@ routes.post('/session', SessionController.store);
 routes.use(authMiddleware);
 
 routes.get('/meetups/provider', ProviderController.index);
+routes.get('/meetups', MeetupController.index);
 
 routes.post('/meetups', MeetupController.store);
 routes.post('/subscriptions/:id', SubscriptionController.store);
