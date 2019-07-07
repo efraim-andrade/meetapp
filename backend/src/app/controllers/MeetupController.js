@@ -35,7 +35,7 @@ class MeetupController {
         include: [
           {
             model: User,
-            as: 'provider',
+            as: 'user',
             attributes: ['id', 'name'],
           },
           {
@@ -76,7 +76,7 @@ class MeetupController {
 
       const meetup = await Meetup.create({
         ...req.body,
-        provider_id: req.userId,
+        user_id: req.userId,
       });
 
       return res.send(meetup);
@@ -101,9 +101,9 @@ class MeetupController {
     try {
       const meetup = await Meetup.findByPk(req.params.id);
 
-      const { provider_id, past } = meetup;
+      const { user_id, past } = meetup;
 
-      if (provider_id !== req.userId) {
+      if (user_id !== req.userId) {
         return res
           .status(401)
           .json({ error: 'Only the event provider can edit the event!' });
@@ -125,9 +125,9 @@ class MeetupController {
     try {
       const meetup = await Meetup.findByPk(req.params.id);
 
-      const { provider_id, past } = meetup;
+      const { user_id, past } = meetup;
 
-      if (provider_id !== req.userId) {
+      if (user_id !== req.userId) {
         return res
           .status(401)
           .json({ error: 'Only the event provider can delete the event!' });

@@ -1,3 +1,5 @@
+import { Op } from 'sequelize';
+
 import SubscriptionMail from '../jobs/SubscriptionMail';
 import Queue from '../../lib/Queue';
 
@@ -6,19 +8,44 @@ import User from '../models/User';
 import Subscription from '../models/Subscription';
 
 class SubscriptionController {
+  async index(req, res) {
+    try {
+      const subscriptions = await Subscription.findAll({
+        where: {
+          user_id: req.userId,
+        },
+        include: [
+          {
+            model: Meetup,
+            attributes: ['id', 'title', 'description', 'location', 'date'],
+            where: {
+              date: { [Op.gt]: new Date() },
+            },
+            required: true,
+          },
+        ],
+        order: [[Meetup, 'date']],
+      });
+
+      return res.json(subscriptions);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
   async store(req, res) {
     try {
       const meetup = await Meetup.findByPk(req.params.id, {
         include: [
           {
             model: User,
-            as: 'provider',
+            as: 'user',
             attributes: ['name', 'email'],
           },
         ],
       });
 
-      if (req.userId === meetup.provider_id) {
+      if (req.userId === meetup.user_id) {
         return res
           .status(400)
           .json({ error: 'A provider can`t subscribe in your own event!' });
@@ -50,6 +77,7 @@ class SubscriptionController {
         include: [
           {
             model: Meetup,
+            as: 'meetup',
             required: true,
             where: {
               date: meetup.date,
