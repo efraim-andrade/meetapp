@@ -1,13 +1,24 @@
-import { isBefore, parseISO, startOfDay, subHours, addHours } from 'date-fns';
-import { Op } from 'sequelize';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+
+import Mail from '../../lib/Mail';
 
 import Meetup from '../models/Meetup';
+import User from '../models/User';
 import Subscription from '../models/Subscription';
 
 class SubscriptionController {
   async store(req, res) {
     try {
-      const meetup = await Meetup.findByPk(req.params.id);
+      const meetup = await Meetup.findByPk(req.params.id, {
+        include: [
+          {
+            model: User,
+            as: 'provider',
+            attributes: ['name', 'email'],
+          },
+        ],
+      });
 
       if (req.userId === meetup.provider_id) {
         return res
@@ -58,6 +69,19 @@ class SubscriptionController {
       const subscription = await Subscription.create({
         user_id: req.userId,
         meetup_id: meetup.id,
+      });
+
+      const user = await User.findByPk(req.userId);
+
+      await Mail.sendMail({
+        to: `${meetup.provider.name} <${meetup.provider.email}>`,
+        subject: 'Novo participante',
+        template: 'subscriptions',
+        context: {
+          provider: meetup.provider.name,
+          user: user.name,
+          meetup: meetup.title,
+        },
       });
 
       return res.send(subscription);
