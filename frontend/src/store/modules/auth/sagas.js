@@ -1,8 +1,7 @@
-import { all, takeLatest, call } from 'redux-saga/effects';
-import { ToastContainer } from 'react-toastify';
+import { all, takeLatest, call, put } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 import api from '~/services/api';
-import history from '~/services/history';
 
 import { signInSuccess, signInFailure } from './actions';
 
@@ -10,7 +9,7 @@ export function* signIn({ payload }) {
   try {
     const { email, password } = payload;
 
-    const response = yield call(api, 'session', {
+    const response = yield call(api.post, 'session', {
       email,
       password,
     });
@@ -20,15 +19,29 @@ export function* signIn({ payload }) {
     if (!user.provider) {
       toast.error('Usuário não é um organizador');
     }
-  } catch (error) {}
+
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
+    yield put(signInSuccess(token, user));
+  } catch (error) {
+    yield put(signInFailure());
+  }
 }
 
-export function* signUp({ payload }) {}
+// export function* signUp({ payload }) {}
 
-export function* setToken({ payload }) {}
+export function setToken({ payload }) {
+  if (!payload) return;
+
+  const { token } = payload.auth;
+
+  if (token) {
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+  }
+}
 
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
-  takeLatest('@auth/SIGN_UP_REQUEST', signUp),
+  // takeLatest('@auth/SIGN_UP_REQUEST', signUp),
 ]);

@@ -1,27 +1,29 @@
 import React from 'react';
+import { Form, Input } from '@rocketseat/unform';
 import { Link } from 'react-router-dom';
 
-import { Input } from '~/components';
 import Logo from '~/assets/images/logo.svg';
 
 export default function SignUp() {
+  function handleSubmit() {}
+
   return (
     <>
       <img src={Logo} alt="Logo Meetapp" title="Logo Meetapp" />
 
-      <form>
+      <Form onSubmit={handleSubmit}>
         <Input type="text" name="name" placeholder="Nome Completo" />
 
         <Input type="text" name="email" placeholder="Digite seu e-mail" />
 
         <Input
-          type="text"
-          name="new_password"
+          type="password"
+          name="password"
           placeholder="Sua senha secreta"
         />
 
         <button type="submit">Criar Conta</button>
-      </form>
+      </Form>
 
       <Link to="/">Já tenho login</Link>
     </>

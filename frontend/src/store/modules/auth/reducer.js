@@ -1,4 +1,4 @@
-import product from 'immer';
+import produce from 'immer';
 
 const INITIAL_STATE = {
   token: null,
@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 };
 
 export default function auth(state = INITIAL_STATE, action) {
-  return product(state, draft => {
+  return produce(state, draft => {
     switch (action.type) {
       case '@auth/SIGN_IN_REQUEST': {
         draft.loading = true;

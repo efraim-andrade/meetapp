@@ -11,12 +11,28 @@ export const Container = styled.div`
   background-image: linear-gradient(#22202c, #402845);
 
   > img {
+    height: 42px;
     margin-bottom: 50px;
   }
 
   > form {
     display: flex;
     flex-direction: column;
+
+    > input {
+      height: 50px;
+      padding: 0 20px;
+      border: 0;
+      border-radius: 4px;
+
+      color: #eee;
+      font-size: 18px;
+      background: rgba(0, 0, 0, 0.2);
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
 
     > input + input {
       margin-top: 10px;
