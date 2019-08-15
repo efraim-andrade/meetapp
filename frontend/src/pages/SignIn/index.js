@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { signInRequest } from '~/store/modules/auth/actions';
+import { store } from '~/store';
 import Logo from '~/assets/images/logo.svg';
+import { signInRequest } from '~/store/modules/auth/actions';
 
 export default function SignIn() {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.tron.log(store.getState().auth);
+  }, []);
 
   function handleSubmit({ email, password }) {
     dispatch(signInRequest(email, password));

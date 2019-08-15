@@ -1,10 +1,15 @@
 import React from 'react';
-import { Form, Input } from '@rocketseat/unform';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Form, Input } from '@rocketseat/unform';
+
+// import {  } from '~/store/modules/auth/actions'
 
 import Logo from '~/assets/images/logo.svg';
 
 export default function SignUp() {
+  const dispatch = useDispatch();
+
   function handleSubmit() {}
 
   return (
