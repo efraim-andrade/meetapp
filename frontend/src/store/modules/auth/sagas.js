@@ -26,6 +26,7 @@ export function* signIn({ payload }) {
     yield put(signInSuccess(token, user));
     history.push('/dashboard');
   } catch (error) {
+    toast.error('Algo deu errado tente novamente.');
     yield put(signInFailure());
   }
 }
@@ -34,7 +35,16 @@ export function signOut() {
   localStorage.clear();
 }
 
-// export function* signUp({ payload }) {}
+export function* signUp({ payload }) {
+  try {
+    console.log(payload);
+    const response = yield call(api.post('users', payload));
+
+    console.log(response);
+  } catch (error) {
+    toast.error('Algo deu errado tente novamente.');
+  }
+}
 
 export function setToken({ payload }) {
   if (!payload) return;
@@ -50,5 +60,5 @@ export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_OUT', signOut),
-  // takeLatest('@auth/SIGN_UP_REQUEST', signUp),
+  takeLatest('@auth/SIGN_UP_REQUEST', signUp),
 ]);
