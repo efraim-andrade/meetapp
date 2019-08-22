@@ -17,8 +17,6 @@ export function* signIn({ payload }) {
 
     const { token, user } = response.data;
 
-    console.log(user);
-
     if (!user.provider) {
       return toast.error('Usuário não é um organizador');
     }
@@ -35,6 +33,8 @@ export function* signIn({ payload }) {
 
 export function signOut() {
   localStorage.clear();
+
+  history.push('/');
 }
 
 export function* signUp({ payload }) {
