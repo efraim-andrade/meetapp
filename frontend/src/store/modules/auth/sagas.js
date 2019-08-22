@@ -17,14 +17,16 @@ export function* signIn({ payload }) {
 
     const { token, user } = response.data;
 
+    console.log(user);
+
     if (!user.provider) {
-      toast.error('Usuário não é um organizador');
+      return toast.error('Usuário não é um organizador');
     }
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
     yield put(signInSuccess(token, user));
-    history.push('/dashboard');
+    return history.push('/dashboard');
   } catch (error) {
     toast.error('Algo deu errado tente novamente.');
     yield put(signInFailure());
@@ -37,11 +39,20 @@ export function signOut() {
 
 export function* signUp({ payload }) {
   try {
-    console.log(payload);
-    const response = yield call(api.post('users', payload));
+    const params = {
+      ...payload,
+      provider: true,
+    };
 
-    console.log(response);
+    yield call(api.post, 'users', params);
+
+    toast.success(
+      'Sua conta foi criada com sucesso! Por favor efetue o login.'
+    );
+
+    history.push('/');
   } catch (error) {
+    console.log(error);
     toast.error('Algo deu errado tente novamente.');
   }
 }
