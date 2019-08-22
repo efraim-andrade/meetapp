@@ -10,7 +10,7 @@ export default function Default({ children }) {
     <Container>
       <Header />
 
-      {children}
+      <div className="content">{children}</div>
     </Container>
   );
 }

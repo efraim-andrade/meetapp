@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import Button from '../Button';
 import Logo from '~/assets/images/logo.svg';
 import { signOut } from '~/store/modules/auth/actions';
 
@@ -33,9 +34,7 @@ export default function Header() {
             <Link to="/">Meu Perfil</Link>
           </div>
 
-          <button type="button" onClick={handleSignout}>
-            Sair
-          </button>
+          <Button onClick={handleSignout}>Sair</Button>
         </div>
       </div>
     </Container>
