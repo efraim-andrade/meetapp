@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 
 import { ButtonElement } from './styles';
 
-// TODO: Fazer a parte do tema dinamico.
-export default function Button({ children, onClick, theme }) {
+export default function Button({ children, onClick, themeColor }) {
   const props = {
     onClick,
-    theme,
+    themeColor,
   };
 
   return (
@@ -18,11 +17,11 @@ export default function Button({ children, onClick, theme }) {
 }
 
 Button.defaultProps = {
-  theme: 'primary',
+  themeColor: 'primary',
 };
 
 Button.propTypes = {
   children: PropTypes.element.isRequired,
   onClick: PropTypes.func.isRequired,
-  theme: PropTypes.string,
+  themeColor: PropTypes.string,
 };

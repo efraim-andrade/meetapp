@@ -34,7 +34,9 @@ export default function Header() {
             <Link to="/">Meu Perfil</Link>
           </div>
 
-          <Button onClick={handleSignout}>Sair</Button>
+          <Button onClick={handleSignout} themeColor="danger">
+            Sair
+          </Button>
         </div>
       </div>
     </Container>
