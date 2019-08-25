@@ -12,8 +12,10 @@ export const Container = styled.header`
     align-items: center;
     justify-content: space-between;
 
-    > .logo {
-      height: 32px;
+    > a {
+      > .logo {
+        height: 32px;
+      }
     }
 
     > .right {

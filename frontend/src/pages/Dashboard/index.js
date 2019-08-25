@@ -5,6 +5,7 @@ import { FaPlusCircle } from 'react-icons/fa';
 
 import { Button } from '~/components';
 import { formatDate } from '~/functions';
+import history from '~/services/history';
 import { meetupsRequest } from '~/store/modules/meetup/actions';
 
 import { Container } from './styles';
@@ -22,7 +23,7 @@ export default function Dashboard() {
       <div className="header">
         <h1>Meus meetups</h1>
 
-        <Button type="button" onClick={() => {}}>
+        <Button type="button" onClick={() => history.push('/create')}>
           <FaPlusCircle size={18} />
           Novo meetup
         </Button>

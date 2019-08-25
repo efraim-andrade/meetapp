@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'sweetalert/dist/sweetalert.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
@@ -18,7 +19,7 @@ export default createGlobalStyle`
   }
 
   html, body, #root {
-    height: 100%;
+    min-height: 100%;
   }
 
   body {

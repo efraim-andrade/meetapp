@@ -19,12 +19,14 @@ export default function Header() {
   return (
     <Container>
       <div className="content">
-        <img
-          src={Logo}
-          className="logo"
-          alt="Meetapp Logo"
-          title="Meetapp Logo"
-        />
+        <Link to="/">
+          <img
+            src={Logo}
+            className="logo"
+            alt="Meetapp Logo"
+            title="Meetapp Logo"
+          />
+        </Link>
 
         <div className="right">
           <div className="info">

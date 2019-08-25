@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import { ButtonElement } from './styles';
 
-export default function Button({ children, onClick, themeColor }) {
+export default function Button({ type, children, onClick, themeColor }) {
   const props = {
     onClick,
     themeColor,
   };
 
   return (
-    <ButtonElement type="button" {...props}>
+    <ButtonElement type={type} {...props}>
       {children}
     </ButtonElement>
   );
@@ -18,10 +18,12 @@ export default function Button({ children, onClick, themeColor }) {
 
 Button.defaultProps = {
   themeColor: 'primary',
+  type: 'button',
 };
 
 Button.propTypes = {
   children: PropTypes.element.isRequired,
   onClick: PropTypes.func.isRequired,
   themeColor: PropTypes.string,
+  type: PropTypes.string,
 };
