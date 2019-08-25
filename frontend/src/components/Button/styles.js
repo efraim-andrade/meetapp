@@ -29,6 +29,6 @@ export const ButtonElement = styled.button`
   ${props => btnTypes[props.themeColor]};
 
   > svg {
-    margin-right: 4px;
+    margin-right: 10px;
   }
 `;
