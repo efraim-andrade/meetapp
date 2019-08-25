@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import SweetAlert from 'sweetalert-react';
+import { toast } from 'react-toastify';
 import {
   FaTimesCircle,
   FaEdit,
@@ -7,13 +9,30 @@ import {
   FaMapMarkerAlt,
 } from 'react-icons/fa';
 
+import api from '~/services/api';
 import { Button } from '~/components';
 import { formatDate } from '~/functions';
+import historyBrowser from '~/services/history';
 
 import { Container } from './styles';
 
 export default function Details({ history }) {
   const meetupDetails = history.location.state.meetup;
+
+  const [showAlert, setShowAlert] = useState(false);
+
+  async function deleteMeetup(id) {
+    setShowAlert(false);
+
+    try {
+      await api.delete(`meetups/${id}`);
+
+      toast.success('Evento apagado com sucesso!');
+      historyBrowser.push('/');
+    } catch (err) {
+      toast.error('Algo deu errado ao deletar, tente novamente!');
+    }
+  }
 
   return (
     <Container>
@@ -26,7 +45,11 @@ export default function Details({ history }) {
             Editar
           </Button>
 
-          <Button type="button" onClick={() => {}} themeColor="danger">
+          <Button
+            type="button"
+            onClick={() => setShowAlert(true)}
+            themeColor="danger"
+          >
             <FaTimesCircle size={18} />
             Cancelar
           </Button>
@@ -50,6 +73,14 @@ export default function Details({ history }) {
           <FaMapMarkerAlt size={18} /> {meetupDetails.location}
         </p>
       </div>
+
+      <SweetAlert
+        show={showAlert}
+        title={meetupDetails.title}
+        text="Deseja cancelar o meetup?"
+        button="Sim"
+        onConfirm={() => deleteMeetup(meetupDetails.id)}
+      />
     </Container>
   );
 }
