@@ -40,7 +40,11 @@ export default function Details({ history }) {
         <h1>{meetupDetails.title}</h1>
 
         <div className="actions">
-          <Button type="button" onClick={() => {}} themeColor="secondary">
+          <Button
+            type="button"
+            onClick={() => historyBrowser.push(`/update/${meetupDetails.id}`)}
+            themeColor="secondary"
+          >
             <FaEdit size={18} />
             Editar
           </Button>

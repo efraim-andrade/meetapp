@@ -13,6 +13,7 @@ export default function Routes() {
       <Route path="/dashboard" component={Dashboard} isPrivate />
       <Route path="/details/:id" component={Details} isPrivate />
       <Route path="/create" component={Create} isPrivate />
+      <Route path="/update/:id" component={Create} isPrivate />
     </Switch>
   );
 }

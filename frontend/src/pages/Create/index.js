@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { FaSave } from 'react-icons/fa';
 import { Form, Input } from '@rocketseat/unform';
@@ -20,7 +21,20 @@ const schema = Yup.object().shape({
   location: Yup.string().required('Preencha uma localização'),
 });
 
-export default function Create() {
+export default function Create({ match }) {
+  const [initialData, setInitialData] = useState({});
+  const meetupDetails = useSelector(state =>
+    state.meetup.data.filter(
+      meetup => Number(meetup.id) === Number(match.params.id)
+    )
+  );
+
+  useEffect(() => {
+    setInitialData(meetupDetails[0]);
+
+    console.tron.log(meetupDetails[0]);
+  }, [meetupDetails]);
+
   async function handleSubmit(data) {
     try {
       await api.post('meetups', data);
@@ -34,7 +48,7 @@ export default function Create() {
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit} schema={schema}>
+      <Form onSubmit={handleSubmit} schema={schema} initialData={initialData}>
         <BannerInput name="banner_id" />
 
         <Input name="title" placeholder="Título do Meetup" />
