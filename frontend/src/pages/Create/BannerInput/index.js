@@ -16,6 +16,12 @@ export default function BannerInput() {
   const ref = useRef();
 
   useEffect(() => {
+    if (defaultValue) {
+      setPreview(defaultValue.url);
+    }
+  }, [defaultValue]);
+
+  useEffect(() => {
     if (ref.current) {
       registerField({
         name: 'banner_id',
@@ -23,7 +29,7 @@ export default function BannerInput() {
         path: 'dataset.file',
       });
     }
-  }, [ref, registerField]);
+  }, [ref]); // eslint-disable-line
 
   async function handleChange(event) {
     const data = new FormData();

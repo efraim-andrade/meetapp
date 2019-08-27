@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import Route from './Route';
 
-import { SignIn, SignUp, Dashboard, Details, Create } from '~/pages';
+import { SignIn, SignUp, Dashboard, Details, Create, Profile } from '~/pages';
 
 export default function Routes() {
   return (
@@ -14,6 +14,7 @@ export default function Routes() {
       <Route path="/details/:id" component={Details} isPrivate />
       <Route path="/create" component={Create} isPrivate />
       <Route path="/update/:id" component={Create} isPrivate />
+      <Route path="/profile" component={Profile} isPrivate />
     </Switch>
   );
 }

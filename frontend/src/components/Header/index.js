@@ -32,8 +32,7 @@ export default function Header() {
           <div className="info">
             <strong>{user.name}</strong>
 
-            {/* TODO: colocar o link certo quando tiver o link */}
-            <Link to="/">Meu Perfil</Link>
+            <Link to="/profile">Meu Perfil</Link>
           </div>
 
           <Button onClick={handleSignout} themeColor="danger">

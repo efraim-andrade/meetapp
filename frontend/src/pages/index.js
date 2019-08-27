@@ -1,7 +1,8 @@
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import Dashboard from './Dashboard';
-import Details from './Details';
 import Create from './Create';
+import Profile from './Profile';
+import Details from './Details';
+import Dashboard from './Dashboard';
 
-export { SignIn, SignUp, Dashboard, Details, Create };
+export { SignIn, SignUp, Dashboard, Details, Create, Profile };

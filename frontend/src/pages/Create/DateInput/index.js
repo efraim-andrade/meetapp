@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { parseISO } from 'date-fns';
 import PropTypes from 'prop-types';
 import ReactDatePicker from 'react-datepicker';
 
@@ -9,7 +10,13 @@ import { Container } from './styles';
 export default function DatePicker({ name, placeholder }) {
   const ref = useRef(null);
   const { fieldName, registerField, defaultValue } = useField(name);
-  const [selected, setSelected] = useState(defaultValue);
+  const [selected, setSelected] = useState(new Date());
+
+  useEffect(() => {
+    if (defaultValue) {
+      setSelected(parseISO(defaultValue));
+    }
+  }, [defaultValue]);
 
   useEffect(() => {
     registerField({
