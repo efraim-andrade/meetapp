@@ -1,19 +1,34 @@
 import React from 'react';
+import { FaSave } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
+
+import { Button } from '~/components';
 
 import { Container } from './styles';
 
 export default function Profile() {
+  const user = useSelector(state => state.auth.user);
+
   return (
     <Container>
-      <h1>profile</h1>
+      <Form initialData={user}>
+        <Input name="name" />
 
-      <Form>
-        <Input placeholder="Nome" name="name" />
+        <Input name="email" />
 
-        <Input placeholder="Nome" name="name" />
+        <hr />
 
-        <Input placeholder="Nome" name="name" />
+        <Input name="password" placeholder="Senha atual" />
+
+        <Input name="new_password" placeholder="Nova Senha" />
+
+        <Input name="confirm_password" placeholder="Confirmação de senha" />
+
+        <Button type="submit" onClick={() => {}}>
+          <FaSave size={18} />
+          Salvar perfil
+        </Button>
       </Form>
     </Container>
   );
