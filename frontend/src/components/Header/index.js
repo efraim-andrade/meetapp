@@ -10,7 +10,7 @@ import { Container } from './styles';
 
 export default function Header() {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.auth.user);
+  const user = useSelector(state => state.user.profile);
 
   function handleSignout() {
     dispatch(signOut());
