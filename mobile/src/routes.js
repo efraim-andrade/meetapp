@@ -5,7 +5,7 @@ import {
   createBottomTabNavigator,
 } from 'react-navigation';
 
-import {SignIn, SignUp, Dashboard, Profile, Subscriptions} from './pages'
+import { SignIn, SignUp, Dashboard, Profile, Subscriptions } from './pages';
 
 export default (isSigned = false) =>
   createAppContainer(

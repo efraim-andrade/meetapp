@@ -1,5 +1,7 @@
+import Card from './Card';
 import Input from './Input';
 import Button from './Button';
+import Header from './Header';
 import Background from './Background';
 
-export { Background, Input, Button };
+export { Card, Header, Background, Input, Button };
