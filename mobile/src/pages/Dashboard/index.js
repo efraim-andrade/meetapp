@@ -20,6 +20,7 @@ import api from '~/services/api';
 
 function Dashboard() {
   const [meetups, setMeetups] = useState([]);
+  const [page, setPage] = useState(1);
   const [actualMeetupDate, setActualMeetupDate] = useState({
     date: '2019-11-01',
   });
@@ -41,6 +42,7 @@ function Dashboard() {
         }));
 
         setMeetups(meetupsData);
+        setPage(2);
       } catch (error) {
         console.tron.log(error);
         Alert.alert('Algo deu errado ao buscar meetups!');
@@ -50,15 +52,37 @@ function Dashboard() {
     fetchMeetups();
   }, []); // eslint-disable-line
 
+  async function loadMore() {
+    try {
+      const response = await api.get('meetups', {
+        params: {
+          date: '2019-11-01',
+          page,
+        },
+      });
+
+      const meetupsData = response.data.map(meetup => ({
+        ...meetup,
+        banner: meetup.banner.url,
+        provider: meetup.user.name,
+      }));
+
+      console.tron.log(meetupsData);
+
+      setMeetups([...meetups, ...meetupsData]);
+      setPage(page + 1);
+    } catch (error) {
+      Alert.alert('Algo deu errado ao buscar meetups!');
+    }
+  }
+
   const formatedDate = useMemo(() => {
     const actualDate = new window.Date(actualMeetupDate.date);
 
     return format(actualDate, "d 'de' MMMM", { locale: pt });
   }, [actualMeetupDate.date]);
 
-  function handleNextDate() {
-    setActualMeetupDate();
-  }
+  function handleNextDate() {}
 
   function handlePrevDate() {}
 
@@ -88,6 +112,8 @@ function Dashboard() {
           data={meetups}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => <Card {...item} />}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.2}
         />
       </Container>
     </Background>
