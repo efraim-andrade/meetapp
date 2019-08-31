@@ -1,8 +1,11 @@
 import styled from 'styled-components/native';
+import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const Container = styled.View`
   padding: 0 20px;
+
+  margin-bottom: 155px;
 `;
 
 export const DateActions = styled.View`
@@ -25,10 +28,27 @@ export const Right = styled(Left).attrs({
   name: 'chevron-right',
 })``;
 
-export const Date = styled.Text`
+export const Date = styled(DatePicker).attrs({
+  showIcon: false,
+  customStyles: {
+    dateInput: {
+      borderWidth: 0,
+    },
+    dateText: {
+      color: '#fff',
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+    placeholderText: {
+      color: '#fff',
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+  },
+})`
   margin: 0 10px;
-
-  color: #fff;
-  font-size: 20px;
-  font-weight: bold;
 `;
+
+export const Meetups = styled.FlatList.attrs({
+  showsVerticalScrollIndicator: false,
+})``;

@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import pt from 'date-fns/locale/pt-BR';
+import { parseISO, format } from 'date-fns';
 
 import {
   Container,
@@ -11,30 +14,36 @@ import {
   Button,
 } from './styles';
 
-export default function Card({ banner }) {
+export default function Card({ banner, title, date, location, provider }) {
+  const convertedDate = useMemo(() => {
+    const parsedDate = parseISO(date);
+
+    return format(parsedDate, "d 'de' MMMM ', às 'h'h'", { locale: pt });
+  }, [date]);
+
   return (
     <Container>
       <Banner source={{ uri: banner }} />
 
       <Content>
-        <Title>Meetup de React Native</Title>
+        <Title>{title}</Title>
 
         <Info>
           <Icon name="event" />
 
-          <Text>24 de junho, as 20h</Text>
+          <Text>{convertedDate}</Text>
         </Info>
 
         <Info>
           <Icon name="place" />
 
-          <Text>Rua Guilherme Lemba, 20</Text>
+          <Text>{location}</Text>
         </Info>
 
         <Info>
           <Icon name="person" />
 
-          <Text>Diego Rocketseat</Text>
+          <Text>{provider}</Text>
         </Info>
 
         <Button>Realizar Inscrição</Button>
@@ -42,3 +51,11 @@ export default function Card({ banner }) {
     </Container>
   );
 }
+
+Card.propTypes = {
+  banner: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  provider: PropTypes.string.isRequired,
+};

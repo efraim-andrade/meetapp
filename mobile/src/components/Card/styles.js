@@ -5,8 +5,9 @@ import ButtonComponent from '../Button';
 
 export const Container = styled.View`
   border-radius: 4px;
-  overflow: hidden;
+  margin-bottom: 20px;
 
+  overflow: hidden;
   background: #fff;
 `;
 
