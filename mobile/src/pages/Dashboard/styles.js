@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import DatePicker from 'react-native-datepicker';
+import DatePickerLib from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const Container = styled.View`
@@ -28,7 +28,7 @@ export const Right = styled(Left).attrs({
   name: 'chevron-right',
 })``;
 
-export const Date = styled(DatePicker).attrs({
+export const DatePicker = styled(DatePickerLib).attrs({
   showIcon: false,
   customStyles: {
     dateInput: {

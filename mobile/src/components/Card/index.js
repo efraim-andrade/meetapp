@@ -14,7 +14,16 @@ import {
   Button,
 } from './styles';
 
-export default function Card({ banner, title, date, location, provider }) {
+export default function Card({
+  id,
+  banner,
+  title,
+  date,
+  location,
+  provider,
+  past,
+  onSubscription,
+}) {
   const convertedDate = useMemo(() => {
     const parsedDate = parseISO(date);
 
@@ -22,7 +31,7 @@ export default function Card({ banner, title, date, location, provider }) {
   }, [date]);
 
   return (
-    <Container>
+    <Container disabled={past}>
       <Banner source={{ uri: banner }} />
 
       <Content>
@@ -46,7 +55,9 @@ export default function Card({ banner, title, date, location, provider }) {
           <Text>{provider}</Text>
         </Info>
 
-        <Button>Realizar Inscrição</Button>
+        <Button disabled={past} onPress={() => onSubscription(id)}>
+          Realizar Inscrição
+        </Button>
       </Content>
     </Container>
   );
@@ -58,4 +69,7 @@ Card.propTypes = {
   date: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  past: PropTypes.bool.isRequired,
+  onSubscription: PropTypes.func.isRequired,
 };

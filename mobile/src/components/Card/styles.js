@@ -7,6 +7,8 @@ export const Container = styled.View`
   border-radius: 4px;
   margin-bottom: 20px;
 
+  opacity: ${props => (props.disabled ? 0.85 : 1)};
+
   overflow: hidden;
   background: #fff;
 `;
