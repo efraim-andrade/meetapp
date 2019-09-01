@@ -46,7 +46,6 @@ class SubscriptionController {
             ],
           },
         ],
-        // order: [[Meetup, 'date']],
       });
 
       return res.json(subscriptions);
