@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Alert } from 'react-native';
 import pt from 'date-fns/locale/pt-BR';
-import { parseISO, format, parse } from 'date-fns';
+import { format } from 'date-fns';
 import { withNavigationFocus } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Header, Background, Card } from '~/components';
+import remountDate from '~/functions/remountDate';
 
 import {
   Container,
@@ -76,18 +77,26 @@ function Dashboard() {
   }
 
   const formatedDate = useMemo(() => {
-    const year = actualMeetupDate.date.substring(0, 4);
-    const month = actualMeetupDate.date.substring(5, 7);
-    const day = actualMeetupDate.date.substring(8, 10);
-
-    const actualDate = new Date(year, month - 1, day);
+    const actualDate = remountDate(actualMeetupDate.date);
 
     return format(actualDate, "d 'de' MMMM", { locale: pt });
   }, [actualMeetupDate.date]);
 
-  function handleNextDate() {}
+  function handleNextDate() {
+    const remountedDate = remountDate(actualMeetupDate.date, 'next');
 
-  function handlePrevDate() {}
+    setActualMeetupDate({
+      date: format(remountedDate, "yyyy'-'MM'-'dd"),
+    });
+  }
+
+  function handlePrevDate() {
+    const remountedDate = remountDate(actualMeetupDate.date, 'prev');
+
+    setActualMeetupDate({
+      date: format(remountedDate, "yyyy'-'MM'-'dd"),
+    });
+  }
 
   async function handleSubscription(id) {
     try {
@@ -106,7 +115,7 @@ function Dashboard() {
 
       <Container>
         <DateActions>
-          <IconButton onPress={handleNextDate}>
+          <IconButton onPress={handlePrevDate}>
             <Left />
           </IconButton>
 
@@ -117,7 +126,7 @@ function Dashboard() {
             onDateChange={date => setActualMeetupDate({ date })}
           />
 
-          <IconButton onPress={handlePrevDate}>
+          <IconButton onPress={handleNextDate}>
             <Right />
           </IconButton>
         </DateActions>
