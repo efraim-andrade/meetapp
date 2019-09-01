@@ -9,19 +9,19 @@ const INITIAL_STATE = {
 export default function meetup(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@meetup/MEETUPS_REQUEST': {
+      case '@meetup/SUBSCRIPTIONS_REQUEST': {
         draft.loading = true;
         draft.error = false;
         break;
       }
 
-      case '@meetup/MEETUPS_SUCCESS': {
+      case '@meetup/SUBSCRIPTIONS_SUCCESS': {
         draft.data = action.payload;
         draft.loading = false;
         break;
       }
 
-      case '@meetup/MEETUPS_FAILURE': {
+      case '@meetup/SUBSCRIPTIONS_FAILURE': {
         draft.loading = false;
         draft.error = true;
         break;

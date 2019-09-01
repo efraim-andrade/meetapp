@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Alert } from 'react-native';
-import pt from 'date-fns/locale/pt-BR';
 import { format } from 'date-fns';
+import pt from 'date-fns/locale/pt-BR';
+import { useDispatch } from 'react-redux';
 import { withNavigationFocus } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Header, Background, Card } from '~/components';
 import remountDate from '~/functions/remountDate';
+import { Header, Background, Card } from '~/components';
+import { subscriptionsRequest } from '~/store/modules/subscriptions/actions';
 
 import {
   Container,
@@ -22,6 +24,8 @@ import api from '~/services/api';
 const date = new Date();
 
 function Dashboard() {
+  const dispatch = useDispatch();
+
   const [meetups, setMeetups] = useState([]);
   const [page, setPage] = useState(1);
   const [actualMeetupDate, setActualMeetupDate] = useState({
@@ -102,6 +106,8 @@ function Dashboard() {
     try {
       await api.post(`subscriptions/${id}`);
 
+      dispatch(subscriptionsRequest());
+
       Alert.alert('Inscrição feita com sucesso!');
     } catch (error) {
       console.tron.log(error);
@@ -135,7 +141,7 @@ function Dashboard() {
           data={meetups}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
-            <Card {...item} onSubscription={handleSubscription} />
+            <Card {...item} onPress={handleSubscription} />
           )}
           onEndReached={loadMore}
           onEndReachedThreshold={0.2}

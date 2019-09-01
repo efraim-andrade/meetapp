@@ -22,7 +22,8 @@ export default function Card({
   location,
   provider,
   past,
-  onSubscription,
+  onPress,
+  cancel,
 }) {
   const convertedDate = useMemo(() => {
     const parsedDate = parseISO(date);
@@ -55,13 +56,18 @@ export default function Card({
           <Text>{provider}</Text>
         </Info>
 
-        <Button disabled={past} onPress={() => onSubscription(id)}>
-          Realizar Inscrição
+        <Button disabled={past} onPress={() => onPress(id)}>
+          {cancel ? 'Cancelar' : 'Realizar'} Inscrição
         </Button>
       </Content>
     </Container>
   );
 }
+
+Card.defaultProps = {
+  cancel: false,
+  past: false,
+};
 
 Card.propTypes = {
   banner: PropTypes.string.isRequired,
@@ -70,6 +76,7 @@ Card.propTypes = {
   location: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  past: PropTypes.bool.isRequired,
-  onSubscription: PropTypes.func.isRequired,
+  past: PropTypes.bool,
+  onPress: PropTypes.func.isRequired,
+  cancel: PropTypes.bool,
 };

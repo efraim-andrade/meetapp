@@ -52,5 +52,5 @@ export const Text = styled.Text`
 export const Button = styled(ButtonComponent)`
   height: 40px;
 
-  background: #f94d6a;
+  background: ${props => (props.cancel ? '#D44059' : '#f94d6a')};
 `;

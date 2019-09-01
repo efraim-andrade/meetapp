@@ -5,6 +5,7 @@ import Queue from '../../lib/Queue';
 
 import Meetup from '../models/Meetup';
 import User from '../models/User';
+import File from '../models/File';
 import Subscription from '../models/Subscription';
 
 class SubscriptionController {
@@ -14,17 +15,38 @@ class SubscriptionController {
         where: {
           user_id: req.userId,
         },
+        attributes: [],
         include: [
           {
             model: Meetup,
-            attributes: ['id', 'title', 'description', 'location', 'date'],
+            attributes: [
+              'id',
+              'title',
+              'description',
+              'location',
+              'date',
+              'banner_id',
+            ],
             where: {
               date: { [Op.gt]: new Date() },
             },
             required: true,
+            as: 'meetup',
+            include: [
+              {
+                model: User,
+                as: 'user',
+                attributes: ['id', 'name'],
+              },
+              {
+                model: File,
+                as: 'banner',
+                attributes: ['url', 'name', 'path'],
+              },
+            ],
           },
         ],
-        order: [[Meetup, 'date']],
+        // order: [[Meetup, 'date']],
       });
 
       return res.json(subscriptions);
@@ -105,6 +127,26 @@ class SubscriptionController {
       });
 
       return res.send(subscription);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
+  async delete(req, res) {
+    try {
+      const subscription = await Subscription.findAll({
+        where: {
+          meetup_id: req.params.id,
+        },
+      });
+
+      if (!subscription) {
+        return res.status(401).json({ error: 'Subscription not found!' });
+      }
+
+      await subscription[0].destroy();
+
+      return res.json({ deleted: true });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
