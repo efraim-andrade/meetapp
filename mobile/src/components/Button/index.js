@@ -4,13 +4,13 @@ import { ActivityIndicator } from 'react-native';
 
 import { Container, Text } from './styles';
 
-function Button({ children, loading, ...rest }) {
+function Button({ children, loading, size, ...rest }) {
   return (
     <Container {...rest}>
       {loading ? (
         <ActivityIndicator size="small" color="#FFF" />
       ) : (
-        <Text>{children}</Text>
+        <Text size={size}>{children}</Text>
       )}
     </Container>
   );
@@ -18,11 +18,13 @@ function Button({ children, loading, ...rest }) {
 
 Button.defaultProps = {
   loading: false,
+  size: 18,
 };
 
 Button.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
   loading: PropTypes.bool,
+  size: PropTypes.number,
 };
 
 export default Button;

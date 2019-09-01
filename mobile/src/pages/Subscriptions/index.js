@@ -20,7 +20,6 @@ function Subscriptions() {
 
       dispatch(subscriptionsRequest());
     } catch (error) {
-      console.tron.log(error.message);
       Alert.alert('Algo deu errado tente novamente!');
     }
   }

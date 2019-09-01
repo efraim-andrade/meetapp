@@ -12,6 +12,6 @@ export const Container = styled.TouchableOpacity`
 
 export const Text = styled.Text`
   color: #fff;
-  font-size: 18px;
   font-weight: bold;
+  font-size: ${props => props.size}px;
 `;
