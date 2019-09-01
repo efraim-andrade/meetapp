@@ -52,7 +52,6 @@ export function* signUp({ payload }) {
 
     history.push('/');
   } catch (error) {
-    console.log(error);
     toast.error('Algo deu errado tente novamente.');
   }
 }

@@ -41,7 +41,7 @@ export const DatePicker = styled(DatePickerLib).attrs({
     },
     placeholderText: {
       color: '#fff',
-      fontSize: 20,
+      fontSize: 19,
       fontWeight: 'bold',
     },
   },

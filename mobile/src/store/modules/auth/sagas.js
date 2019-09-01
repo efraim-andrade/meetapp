@@ -36,7 +36,6 @@ export function* signUp({ payload }) {
 
     yield put(signInRequest(email, password));
   } catch (error) {
-    console.log(error);
     Alert.alert('Algo deu errado tente novamente.');
   }
 }

@@ -110,6 +110,7 @@ function Dashboard() {
 
       Alert.alert('Inscrição feita com sucesso!');
     } catch (error) {
+      console.tron.log(error)
       Alert.alert('Você já se inscreveu neste evento!');
     }
   }

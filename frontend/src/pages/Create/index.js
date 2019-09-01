@@ -33,11 +33,15 @@ export default function Create({ match }) {
   );
 
   useEffect(() => {
-    setInitialData(meetupDetails[0]);
+    if (meetupDetails[0]) {
+      setInitialData(meetupDetails[0]);
+    }
   }, [meetupDetails]);
 
   useEffect(() => {
-    setMultilineValue(meetupDetails[0].description);
+    if (meetupDetails[0]) {
+      setMultilineValue(meetupDetails[0].description);
+    }
   }, []); //eslint-disable-line
 
   async function handleSubmit(data) {
